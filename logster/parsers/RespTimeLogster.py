@@ -48,11 +48,11 @@ class RespTimeLogster(LogsterParser):
             total_time_taken = self.metrics[metric]['total_time_taken']
             count = self.metrics[metric]['count']
             total_time_taken_milliseconds = self._microseconds_to_milliseconds(total_time_taken)
-            avg_time_taken_milliseconds = (total_time_taken_milliseconds / count)
+            #Drop the decimals, not needed for our metrics
+            avg_time_taken_milliseconds = int((total_time_taken_milliseconds / count))
             metric_objects.append(MetricObject(hostname, avg_time_taken_milliseconds, "avg_resp_time"))
 
         return metric_objects
 
     def _microseconds_to_milliseconds(self, number):
-        #Convert to miliseconds and drop the decimals
-        return int((number/1000))
+        return (number/1000)
