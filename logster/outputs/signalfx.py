@@ -23,7 +23,6 @@ class SignalfxOutput(LogsterOutput):
         else:
             self.signalfx_metric_type = options.signalfx_metric_type
 
-        self.signalfx_host = options.signalfx_host
         self.signalfx_token = options.signalfx_token
 
     def submit(self, metrics):
