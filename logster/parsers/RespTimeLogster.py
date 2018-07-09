@@ -50,7 +50,7 @@ class RespTimeLogster(LogsterParser):
             total_time_taken_milliseconds = self._microseconds_to_milliseconds(total_time_taken)
             #Drop the decimals, not needed for our metrics
             avg_time_taken_milliseconds = int((total_time_taken_milliseconds / count))
-            metric_objects.append(MetricObject(hostname, avg_time_taken_milliseconds, "avg_resp_time"))
+            metric_objects.append(MetricObject(hostname, avg_time_taken_milliseconds, "apache_avg_resp_time"))
 
         return metric_objects
 
