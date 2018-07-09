@@ -4,7 +4,7 @@ from logster.outputs.ganglia import GangliaOutput
 from logster.outputs.statsd import StatsdOutput
 from logster.outputs.cloudwatch import CloudwatchOutput
 from logster.outputs.nsca import NSCAOutput
-from logster.outputs.signalfx import SignalfxOutput
+from logster.outputs.sfx import SignalfxOutput
 
 builtin_output_classes = (
         StdoutOutput,
