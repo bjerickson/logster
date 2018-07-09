@@ -6,7 +6,8 @@ import socket
 class SignalfxOutput(LogsterOutput):
     shortname = 'signalfx'
 
-    def add_options(selfcls, parser):
+    @classmethod
+    def add_options(cls, parser):
         parser.add_option('--sigalfx-host', action='store',
                           help='Hostname and port for the signalfx proxy server, eg. signalfx.example.com:2033')
         parser.add_option('--signalfx-token', action='store',
