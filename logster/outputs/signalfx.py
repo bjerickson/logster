@@ -1,6 +1,6 @@
 from logster.logster_helper import LogsterOutput
-import re
-import socket
+from logster.logster_helper import LogsterParsingException
+import signalfx
 
 
 class SignalfxOutput(LogsterOutput):
@@ -8,8 +8,6 @@ class SignalfxOutput(LogsterOutput):
 
     @classmethod
     def add_options(cls, parser):
-        parser.add_option('--signalfx-host', action='store',
-                          help='Hostname and port for the signalfx proxy server, eg. signalfx.example.com:2033')
         parser.add_option('--signalfx-token', action='store',
                           help='Signalfx token, used to connect to the signalfx api')
         parser.add_option('--signalfx-metric-type', action='store',
@@ -17,9 +15,6 @@ class SignalfxOutput(LogsterOutput):
 
     def __init__(self, parser, options, logger):
         super(SignalfxOutput, self).__init__(parser, options, logger)
-        if not options.signalfx_host:
-            parser.print_help()
-            parser.error("You must supply --signalfx-host when using 'signalfx' as an output type.")
         if not options.signalfx_token:
             parser.print_help()
             parser.error("You must supply --signalfx-token when using 'signalfx as your output source")
@@ -33,10 +28,38 @@ class SignalfxOutput(LogsterOutput):
 
     def submit(self, metrics):
 
+
+        if (not self.dry_run):
+            sfx = signalfx.SignalFx().ingest(self.signalfx_token)
+
         for metric in metrics:
-            metric_name = self.get_metric_name(metric)
-            metric_type = metric.type
+            hostname = self.get_metric_name(metric)
             metric_value = metric.value
             metric_units = metric.units
 
-            print "Metric Units: {}, Metric Type: {}, Metric Name: {}, Metric Value: {}".format(metric_units, metric_type, metric_name, metric_value)
+            sfx_data = [
+                {
+                    'metric': metric_units,
+                    'value': metric_value,
+                    'dimensions': {
+                        'host': hostname
+                    }
+                }
+            ]
+
+            if (not self.dry_run):
+                try:
+                    if (self.signalfx_metric_type == 'gauge'):
+                        sfx.send(
+                            gauges = sfx_data
+                        )
+                    if (self.signalfx_metric_type == 'counter'):
+                        sfx.send(
+                            counters = sfx_data
+                        )
+                except Exception as e:
+                    raise LogsterParsingException("Unable to send metric: {}".format(sfx_data))
+                finally:
+                    sfx.stop()
+            else:
+                print("Hostname: {}, Metric Name: {}, Metric Value: {}".format(hostname, metric_units, metric_value))

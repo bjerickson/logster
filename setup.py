@@ -19,7 +19,8 @@ setup(
         'logster/outputs'
     ],
     install_requires = [
-        'pygtail>=0.5.1'
+        'pygtail>=0.5.1',
+        'signalfx>=1.0.19'
     ],
     zip_safe=False,
     scripts=[
