@@ -23,7 +23,7 @@ class SignalfxOutput(LogsterOutput):
         if not options.signalfx_token:
             parser.print_help()
             parser.error("You must supply --signalfx-token when using 'signalfx as your output source")
-        if not options.metric_type:
+        if not options.signalfx_metric_type:
             self.signalfx_metric_type = 'gauge'
         else:
             self.signalfx_metric_type = options.signalfx_metric_type
