@@ -1,6 +1,6 @@
 from logster.logster_helper import LogsterOutput
 from logster.logster_helper import LogsterParsingException
-import signalfx.Signalfx
+import signalfx
 
 class SignalfxOutput(LogsterOutput):
     shortname = 'signalfx'
@@ -27,7 +27,7 @@ class SignalfxOutput(LogsterOutput):
     def submit(self, metrics):
 
         if (not self.dry_run):
-            sfx = signalfx.ingest(self.signalfx_token)
+            sfx = signalfx.SignalFx().ingest(self.signalfx_token)
 
         for metric in metrics:
             hostname = self.get_metric_name(metric)
