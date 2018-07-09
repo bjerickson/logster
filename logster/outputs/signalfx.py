@@ -8,7 +8,7 @@ class SignalfxOutput(LogsterOutput):
 
     @classmethod
     def add_options(cls, parser):
-        parser.add_option('--sigalfx-host', action='store',
+        parser.add_option('--signalfx-host', action='store',
                           help='Hostname and port for the signalfx proxy server, eg. signalfx.example.com:2033')
         parser.add_option('--signalfx-token', action='store',
                           help='Signalfx token, used to connect to the signalfx api')
