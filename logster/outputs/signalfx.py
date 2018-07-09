@@ -19,3 +19,8 @@ class SignalfxOutput(LogsterOutput):
         if not options.signalfx_host:
             parser.print_help()
             parser.error("You musst supply --signalfx-host when useing 'signalfx' as an output type.")
+
+    def submit(self, metrics):
+
+        for metric in metrics:
+            print(metric)
