@@ -3,7 +3,7 @@ from logster.logster_helper import LogsterParsingException
 import signalfx
 
 class SignalfxOutput(LogsterOutput):
-    shortname = 'signalfx'
+    shortname = 'sfx'
 
     @classmethod
     def add_options(cls, parser):
