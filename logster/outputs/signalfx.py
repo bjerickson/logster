@@ -19,7 +19,17 @@ class SignalfxOutput(LogsterOutput):
         super(SignalfxOutput, self).__init__(parser, options, logger)
         if not options.signalfx_host:
             parser.print_help()
-            parser.error("You musst supply --signalfx-host when useing 'signalfx' as an output type.")
+            parser.error("You must supply --signalfx-host when using 'signalfx' as an output type.")
+        if not options.signalfx_token:
+            parser.print_help()
+            parser.error("You must supply --signalfx-token when using 'signalfx as your output source")
+        if not options.metric_type:
+            self.metric_type = 'gauge'
+        else:
+            self.metric_type = options.metric_type
+
+        self.signalfx_host = options.signalfx_host
+        self.signalfx_token = options.signalfx_token
 
     def submit(self, metrics):
 
