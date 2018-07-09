@@ -37,5 +37,6 @@ class SignalfxOutput(LogsterOutput):
             metric_name = self.get_metric_name(metric)
             metric_type = metric.type
             metric_value = metric.value
+            metric_units = metric.units
 
-            print "Metric Type: {}, Metric Name: {}, Metric Value: {}".format(metric_type, metric_name, metric_value)
+            print "Metric Units: {}, Metric Type: {}, Metric Name: {}, Metric Value: {}".format(metric_units, metric_type, metric_name, metric_value)
