@@ -33,7 +33,7 @@ class RespTimeLogster(LogsterParser):
                              help='Comma-separated list of filters to exclude: (default: "/cgi-bin/status.py,server-status"')
 
         opts, args = optparser.parse_args(args=options)
-        self.filters = opts.filtes.split(',')
+        self.filters = opts.filters.split(',')
 
     def parse_line(self, line):
         '''Split the hostname and get the last element'''
